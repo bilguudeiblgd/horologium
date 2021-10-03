@@ -1,0 +1,57 @@
+.center{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+.timer-button{
+    padding: 0.5rem 1.5rem;
+}
+.timer-icon{
+    font-size: 24px;
+}
+.button-content{
+    display: flex !important;
+    flex-direction: row;
+    align-items: center;
+}
+.subject-button{
+    color: white !important;
+    background-color: transparent !important;
+}
+
+.timer-container{
+    background-color: white;
+}
+.btn{
+    border-radius: 20px;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    -ms-border-radius: 20px;
+    -o-border-radius: 20px;
+}
+.inner-circle{
+    position: relative;
+  background-color: white;
+  height: 13rem;
+  width: 13rem;
+  border-radius: 50%;
+  border:none;
+  transition: 0.2s;
+  -webkit-transition: 0.2s;
+  -moz-transition: 0.2s;
+  -ms-transition: 0.2s;
+  -o-transition: 0.2s;
+}
+
+.circle-content{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%);
+    -moz-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    -o-transform: translate(-50%, -50%);
+}

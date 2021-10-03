@@ -1,0 +1,46 @@
+.nav-container{
+    /*background-color: #acacac;
+    */background-color: #27273f;
+    height: 100vh;
+    width: 12rem;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    
+}
+ul{
+    padding: 0 !important;
+}
+li{
+    list-style-type: none;
+    padding: 1rem 2rem;
+}
+a{
+    color: rgb(255, 255, 255);
+    text-decoration: none;
+}
+.list-container{
+    display: flex;
+    flex-direction: row;
+    justify-content: left;
+    align-items: center;
+}
+.nav-icons{
+    font-size: 1.4rem;
+    margin-right: 8px;
+}
+
+.all-navbar-container{
+    position: fixed;
+}
+.login{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    bottom: 10%;
+}
+.login-icon{
+    font-size: 3rem;
+    color: white;
+}
