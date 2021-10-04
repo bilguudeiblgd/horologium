@@ -3,6 +3,7 @@ import { Container, Dropdown, DropdownButton, Button } from "react-bootstrap";
 import "./Timer.css";
 
 import Service from '../services/SubjectService.js';
+import { IoNewspaper } from "react-icons/io5";
 
 const pauseColor = {
   backgroundColor: '#000',
@@ -33,6 +34,8 @@ export default class Timer extends Component {
       subjectchosen: "CHOOSE A SUBJECT",
       hovering: false,
       hoverColor: {},
+      userOnPage: true,
+      leftDate: "",
     };
     this.startTimer = this.startTimer.bind(this);
     this.changeDropdown = this.changeDropdown.bind(this);
@@ -40,9 +43,45 @@ export default class Timer extends Component {
     this.onHoverEnter = this.onHoverEnter.bind(this);
     this.onHoverLeave = this.onHoverLeave.bind(this);
     this.fetchData = this.fetchData.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
-  async componentDidMount() {
-    this.fetchData()
+  componentDidMount() {
+    window.addEventListener("focus", this.onFocus);
+    window.addEventListener("blur", this.onBlur);
+    this.fetchData();
+
+  }
+  componentWillUnmount() {
+    window.removeEventListener("focus", this.onFocus);
+    window.removeEventListener("blur", this.onBlur);
+  }
+  onFocus() {
+    if(this.state.userOnPage || this.state.paused) return;
+    this.setState({userOnPage: true});
+    if(this.state.timer_started){
+      let dateNow = new Date();
+      let missingFor = dateNow.getTime() - this.state.leftDate.getTime();
+      
+      let missingHour = parseInt(missingFor / 3600000);
+      missingFor %= 3600000;
+      let missingMin = parseInt(missingFor / 60000);
+      missingFor %= 60000;
+      let missingSec = parseInt(missingFor / 1000);
+      missingFor %= 1000;
+      let missingMs = parseInt(missingFor);
+
+      this.setState({currentTimeHour: this.state.currentTimeHour + missingHour, 
+        currentTimeMin: this.state.currentTimeMin + missingMin,
+        currentTimeSec: this.state.currentTimeSec + missingSec,
+        currentTimeMs: this.state.currentTimeMs + missingMs});
+    }
+  }
+  onBlur() {
+    this.setState({userOnPage: false});  
+    if(this.state.timer_started){
+      this.setState({leftDate: new Date()});
+    }
   }
   fetchData() {
     Service.callSubjects(this.props.userid)
@@ -156,7 +195,7 @@ export default class Timer extends Component {
                       {this.state.currentTimeMin === 0 ? <span>00:</span> : <span>{this.state.currentTimeMin < 10 ? `0${this.state.currentTimeMin}` : this.state.currentTimeMin}:</span>}
                       <span>{this.state.currentTimeSec < 10 ? '0' + this.state.currentTimeSec : this.state.currentTimeSec}</span>
                     </h1>
-                    <p style={{ position: 'absolute', left: '33%', top: '70%', letterSpacing: '4px' }}>PAUSE</p>
+                    <p style={{ position: 'absolute', left: '33%', top: '70%', letterSpacing: '4px' }}>{this.state.paused ? "START" : "PAUSE"}</p>
                   </div>
                   :
                   <div>

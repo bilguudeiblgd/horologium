@@ -25,31 +25,34 @@ class App extends React.Component {
     this.login = this.login.bind(this);
     this.loginClose = this.loginClose.bind(this);
     this.logout = this.logout.bind(this);
+    this.onFocus = this.onFocus.bind(this);
+    this.onBlur = this.onBlur.bind(this);
   }
-  getUserData(){
-    this.setState({userid: Auth.getCurrentUser().id, username: Auth.getCurrentUser().email});
+  getUserData() {
+    this.setState({ userid: Auth.getCurrentUser().id, username: Auth.getCurrentUser().email });
   }
-  logout(){
+  logout() {
     Auth.logout();
-    this.setState({loggedIn: false, popOpen: false, userid: "", username: ""});
-    
+    this.setState({ loggedIn: false, popOpen: false, userid: "", username: "" });
+
   }
   login() {
     this.setState({ popOpen: true });
   }
-  loginClose(){
-    this.setState({popOpen: false});
-    if(!Auth.getCurrentUser()) return;
-    this.setState({loggedIn: true});
-    if(!this.state.loggedIn) return;
-    this.setState({ popOpen: false, userid: Auth.getCurrentUser().id, username: Auth.getCurrentUser().email});
-    
+  loginClose() {
+    this.setState({ popOpen: false });
+    if (!Auth.getCurrentUser()) return;
+    this.setState({ loggedIn: true });
+    if (!this.state.loggedIn) return;
+    this.setState({ popOpen: false, userid: Auth.getCurrentUser().id, username: Auth.getCurrentUser().email });
+
   }
   componentDidMount() {
-    
+    window.addEventListener("focus", this.onFocus);
+    window.addEventListener("blur", this.onBlur);
     this._isMounted = true;
     // this.setState({ subjects: [...data.subjects] });
-    if(!this.state.loggedIn) return;
+    if (!this.state.loggedIn) return;
     Service.callSubjects(this.state.userid)
       .then((subject) => {
         this.setState({ subjects: [...subject] });
@@ -60,8 +63,16 @@ class App extends React.Component {
         return;
       });
   }
+  onFocus() {
+    // console.log("tab is active")
+  }
+  onBlur() {
+    // console.log("tab is not active");
+  }
   componentWillUnmount() {
     this._isMounted = false;
+    window.removeEventListener("focus", this.onFocus);
+    window.removeEventListener("blur", this.onBlur);
   }
   render() {
     const blur = {
@@ -77,9 +88,9 @@ class App extends React.Component {
           <Router>
             <div className="custom-container">
 
-              <Navbar login={this.login} username={this.state.username} logout={this.logout} loggedIn={this.state.loggedIn}/>
+              <Navbar login={this.login} username={this.state.username} logout={this.logout} loggedIn={this.state.loggedIn} />
 
-              <Route path="/" exact render={props => <Timer userid={this.state.userid} logged={this.state.loggedIn} login={this.login}/>} />
+              <Route path="/" exact render={props => <Timer userid={this.state.userid} logged={this.state.loggedIn} login={this.login} />} />
               <Route path="/dashboard" exact component={Dashboard} />
               <Route path="/subjects" exact render={props => <ListSubject currentUser={this.state.userid} subjects={this.state.subjects} />} />
 
