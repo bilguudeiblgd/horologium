@@ -27,7 +27,7 @@ export default class SignUp extends Component {
             this.setState({ errmsg: 'password too short' });
             return;
         }
-        
+
         AuthService.register(this.state.username, this.state.email, this.state.password)
             .then(() => {
                 alert("You have been successfully registered!");
@@ -38,12 +38,18 @@ export default class SignUp extends Component {
             })
     }
     render() {
+        const noStyleButton = {
+            backgroundColor: 'transparent',
+            color: 'inherit',
+            border: 'none',
+            outline: 'inherit'
+        }
         return (
             <div>
                 <div style={{ padding: '2rem 0 1rem 0', display: 'flex', justifyContent: 'flex-end' }}>
-                    <a onClick={this.props.loginClose}>
+                    <button style={noStyleButton} onClick={this.props.loginClose}>
                         <IoCloseOutline style={{ fontSize: '1.5rem' }} />
-                    </a>
+                    </button>
                 </div>
 
                 <Form onSubmit={this.validator}>
@@ -59,13 +65,13 @@ export default class SignUp extends Component {
                     <Form.Group className="mb-3" controlId="formBasicPassword">
                         <Form.Label>Password</Form.Label>
                         <Form.Control className="pe-5" name="password" onChange={this.onChangeHandler} value={this.state.password} type="password" placeholder="Password" />
-                    {this.state.errmsg !== "" ? <p style={{color: 'red'}}>{this.state.errmsg}</p> : ""}
+                        {this.state.errmsg !== "" ? <p style={{ color: 'red' }}>{this.state.errmsg}</p> : ""}
                     </Form.Group>
-                    
+
                     <div style={{ display: 'flex', justifyContent: 'center' }}>
                         <Button className="px-5" variant="primary" size="lg" type="submit">
                             Register
-                    </Button>
+                        </Button>
                     </div>
 
                 </Form>

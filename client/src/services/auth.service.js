@@ -12,7 +12,7 @@ class AuthService {
             .then(response => {
                 if (response.data.accessToken) {
                     localStorage.setItem("user", JSON.stringify(response.data));
-                    console.log(localStorage.getItem("user"));
+                    
                 }
                 return response.data;
             });
@@ -20,6 +20,7 @@ class AuthService {
 
     logout() {
         localStorage.removeItem("user");
+        window.location.reload();
     }
 
     register(username, email, password) {

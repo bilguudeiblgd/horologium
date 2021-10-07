@@ -48,11 +48,19 @@ class App extends React.Component {
 
   }
   componentDidMount() {
+    
+    const loggedInUser = Auth.getCurrentUser()
+    if(loggedInUser) {
+      const foundUser = loggedInUser;
+      
+      this.setState({userid: foundUser.id, username: foundUser.email, loggedIn: true});
+    }
     window.addEventListener("focus", this.onFocus);
     window.addEventListener("blur", this.onBlur);
     this._isMounted = true;
     // this.setState({ subjects: [...data.subjects] });
     if (!this.state.loggedIn) return;
+    
     Service.callSubjects(this.state.userid)
       .then((subject) => {
         this.setState({ subjects: [...subject] });

@@ -24,22 +24,22 @@
     height: 18rem;
     width: 18rem;
     overflow: hidden;
-    border-radius: 20px;
-    -webkit-border-radius: 20px;
-    -moz-border-radius: 20px;
-    -ms-border-radius: 20px;
-    -o-border-radius: 20px;
+    border-radius: 24px;
+    -webkit-border-radius: 24px;
+    -moz-border-radius: 24px;
+    -ms-border-radius: 24px;
+    -o-border-radius: 24px;
     margin: 2rem 0;
 }
 .card-inside-container{
     position: absolute;
     background-color: #1D204B;
     width: 100%;
-    margin-top: 3rem;
-    height: 85%;
+    margin-top: 2rem;
+    height: 90%;
     color: white;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-top-left-radius: 24px;
+    border-top-right-radius: 24px;
     z-index: 2;
     padding-left: 20px;
     padding-top: 24px;

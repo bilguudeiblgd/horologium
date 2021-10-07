@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import "./ListSubject.css";
-import { Button, Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap';
 
 
 import Subjects from './Subjects.js';
 import Service from "../../services/SubjectService.js"
 import AddSubject from './AddSubject.js'
-import Loading from '../Loading.js'
+import Auth from '../../services/auth.service.js'
 
 export default class ListSubject extends Component {
     constructor(props) {
@@ -19,7 +19,11 @@ export default class ListSubject extends Component {
         this.deleteSubject = this.deleteSubject.bind(this);
     }
     componentDidMount() {
-        Service.callSubjects(this.props.currentUser)
+        if(!this.props.currentUser && !Auth.getCurrentUser()) {alert("LOG IN PLEASE... im afraid of bugs"); return;}
+        let user = this.props.currentUser || Auth.getCurrentUser().id;
+        
+        const userid = user;
+        Service.callSubjects(userid)
             .then((subject) => {
                 console.log(String(subject));
                 if(String(subject).startsWith("Error")) return;
@@ -73,7 +77,7 @@ export default class ListSubject extends Component {
 
                                 {(this.state.subjects).map((item, index) => {
 
-                                    return (<Col sm={3}><Subjects item={item} key={index} deleteSubject={this.deleteSubject} /></Col>)
+                                    return (<Col sm={6} md={4} lg={4} key={index}><Subjects item={item} deleteSubject={this.deleteSubject} /></Col>)
 
                                 })}
                             </Row>

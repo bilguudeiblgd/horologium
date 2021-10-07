@@ -7,7 +7,7 @@ export default class AddSubject extends Component {
             title: '',
             errmsg: '',
         }
-        
+
     }
     onWriteHandler = (e) => {
         this.setState({ title: e.target.value });
@@ -19,41 +19,70 @@ export default class AddSubject extends Component {
     validateSubject = () => {
         let duplicateExists = false;
         if (this.state.title.length === 0) {
-            this.setState({errmsg: "it's empty dude"})
+            this.setState({ errmsg: "it's empty dude" })
             return;
         };
-        
+
         this.props.subjects.forEach(subject => {
-            if (subject.subjectname === this.state.title){
-                this.setState({errmsg: "it exists"})
+            if (subject.subjectname === this.state.title) {
+                this.setState({ errmsg: "it exists" })
                 duplicateExists = true;
             };
         })
-        if(duplicateExists) return;
-      
+        if (duplicateExists) return;
+
         this.props.addSubject(this.state.title);
-        this.setState({title: ''});
+        this.setState({ title: '' });
     }
     render() {
         return (
             <div>
                 <form onSubmit={this.onSubmitHandler} style={form}>
-                    <div style={inputArea}>
-                        <input type="text" onChange={this.onWriteHandler} value={this.state.title} placeholder="Type something..." id="subjectname" />
-                        {this.state.errmsg}
+                    <div style={addSubjectContainer}>
+
+                        <div style={inputAreaContainer}>
+                            <input type="text" style={inputArea} onChange={this.onWriteHandler} value={this.state.title} placeholder="Type something..." id="subjectname" />
+
+                        </div>
+                        <button type="submit" style={addSubjectButton} onClick={this.addSubject}>Add</button>
                     </div>
-                    <button type="submit" onClick={this.addSubject}>Add Subject</button>
+
                 </form>
+                <p style={{color: 'red'}}>  {this.state.errmsg}
+                </p>
+
             </div>
         )
     }
 }
-
+const addSubjectContainer = {
+    display: 'flex',
+    flexDirection: 'row',
+    border: '1px black solid',
+    borderRadius: '24px',
+    overflow: 'hidden',
+    height: '48px'
+}
 const form = {
     display: 'flex',
     flexDirection: 'row',
 }
+const inputAreaContainer = {
+    
+
+}
 const inputArea = {
-    display: 'flex',
-    flexDirection: 'column'
+    height: '100%',
+    padding: '10px',
+    outline: 'none',
+    border: 'none'
+}
+const addSubjectButton = {
+    height: "100%",
+    outline: 'none',
+    border: 'none',
+    color: 'white',
+    backgroundColor: '#27273f',
+    padding: '0px 1.4rem',
+    borderRadius: '24px'
 }

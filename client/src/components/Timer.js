@@ -3,7 +3,7 @@ import { Container, Dropdown, DropdownButton, Button } from "react-bootstrap";
 import "./Timer.css";
 
 import Service from '../services/SubjectService.js';
-import { IoNewspaper } from "react-icons/io5";
+
 
 const pauseColor = {
   backgroundColor: '#000',
@@ -49,6 +49,7 @@ export default class Timer extends Component {
   componentDidMount() {
     window.addEventListener("focus", this.onFocus);
     window.addEventListener("blur", this.onBlur);
+    if (!this.state.userid) return;
     this.fetchData();
 
   }
@@ -57,12 +58,12 @@ export default class Timer extends Component {
     window.removeEventListener("blur", this.onBlur);
   }
   onFocus() {
-    if(this.state.userOnPage || this.state.paused) return;
-    this.setState({userOnPage: true});
-    if(this.state.timer_started){
+    if (this.state.userOnPage || this.state.paused) return;
+    this.setState({ userOnPage: true });
+    if (this.state.timer_started) {
       let dateNow = new Date();
       let missingFor = dateNow.getTime() - this.state.leftDate.getTime();
-      
+
       let missingHour = parseInt(missingFor / 3600000);
       missingFor %= 3600000;
       let missingMin = parseInt(missingFor / 60000);
@@ -71,16 +72,18 @@ export default class Timer extends Component {
       missingFor %= 1000;
       let missingMs = parseInt(missingFor);
 
-      this.setState({currentTimeHour: this.state.currentTimeHour + missingHour, 
+      this.setState({
+        currentTimeHour: this.state.currentTimeHour + missingHour,
         currentTimeMin: this.state.currentTimeMin + missingMin,
         currentTimeSec: this.state.currentTimeSec + missingSec,
-        currentTimeMs: this.state.currentTimeMs + missingMs});
+        currentTimeMs: this.state.currentTimeMs + missingMs
+      });
     }
   }
   onBlur() {
-    this.setState({userOnPage: false});  
-    if(this.state.timer_started){
-      this.setState({leftDate: new Date()});
+    this.setState({ userOnPage: false });
+    if (this.state.timer_started) {
+      this.setState({ leftDate: new Date() });
     }
   }
   fetchData() {
@@ -98,9 +101,11 @@ export default class Timer extends Component {
       })
   }
   changeDropdown(props) {
+    if(!this.state.subjectchosen.startsWith("CHOOSE A SUBJECT")) {alert("you can't change your subject since the timer is started"); return;}
     this.setState({ subjectchosen: props.target.innerText })
   }
   startTimer() {
+    if (this.state.subjectchosen.startsWith('CHOOSE A SUBJECT')) { alert("please choose a subject first"); return; }
     if (this.state.timer_started) {
       this.setState({ paused: true });
     }
@@ -229,9 +234,7 @@ const endButton = {
   color: '#27273f',
   paddingTop: '1rem',
 }
-const thinFont = {
-  fontWeight: 100,
-}
+
 const circle = {
   backgroundColor: '#27273f',
   height: '15rem',
@@ -241,8 +244,4 @@ const circle = {
   alignItems: 'center',
   borderRadius: '50%',
   boxShadow: 'rgba(50, 50, 93, 0.25) 0px 50px 100px -20px, rgba(0, 0, 0, 0.3) 0px 30px 60px -30px, rgba(10, 37, 64, 0.35) 0px -2px 6px 0px inset',
-}
-const innerCircle = {
-
-
 }

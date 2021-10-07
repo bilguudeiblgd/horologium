@@ -10,11 +10,7 @@ import { FaRegUserCircle } from 'react-icons/fa';
 
 import "./Navbar.css"
 export default class Navbar extends Component {
-  constructor(props){
-    super(props);
-  
-  }
-  
+
   render() {
 
     return (
@@ -31,7 +27,7 @@ export default class Navbar extends Component {
               </div>
                 <div>
                   Home
-              </div></Link>
+                </div></Link>
             </li>
             <li>
               <Link to="/subjects" className="list-container"><div>
@@ -44,20 +40,25 @@ export default class Navbar extends Component {
               <Link to="/subjects/add" className="list-container"><div><RiDashboardLine className="nav-icons" /></div><div>Dashboard</div></Link>
             </li>
           </ul>
-          <div className="login">
-            <a onClick={this.props.login} style={{display: 'flex', flexDirection: 'column', 'alignItems':'center'}}>
-              <p style={{color: "white"}}>{this.props.username}</p>
-              <FaRegUserCircle className="login-icon" /> 
-              {this.props.loggedIn ? 
-              <button style={{marginTop: '8px'}} onClick={this.props.logout}>
-                  Logout
-              </button> 
-  : ''}
-            </a>
+          <div className="login" style={{display: 'flex', flexDirection: 'column'}}>
+            <button onClick={this.props.login} style={{ display: 'flex', flexDirection: 'column', 'alignItems': 'center', outline: 'none', backgroundColor: 'transparent', border: 'none' }}>
+              <p style={{ color: "white" }}>{this.props.username}</p>
+              
+              {
+                this.props.loggedIn ? <div style={{width: "50px", height: "50px", border: "1px white solid", borderRadius: '8px'}}><img src={`https://avatars.dicebear.com/api/human/${this.props.username}.svg`}  alt ="Your sprite"/></div>
+              :
+              <FaRegUserCircle className="login-icon" />
+            }
+            </button>
+            {this.props.loggedIn ?
+              <button style={{ marginTop: '8px', background: 'transparent', color: 'grey', outline: 'none', border: 'none' }} onClick={this.props.logout}>
+                Logout
+              </button>
+              : ''}
 
           </div>
         </div>
-        
+
       </div>
 
     );

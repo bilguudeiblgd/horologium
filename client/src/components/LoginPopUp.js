@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react';
+
 import React from 'react';
 import { Form, Button } from 'react-bootstrap';
 import { IoCloseOutline } from 'react-icons/io5';
@@ -48,9 +48,9 @@ export default class LoginPopUp extends React.Component {
                         :
                         <div>
                             <div style={{ padding: '2rem 0 1rem 0', display: 'flex', justifyContent: 'flex-end' }}>
-                                <a onClick={this.props.loginClose}>
+                                <button style={noStyleButton} onClick={this.props.loginClose}>
                                     <IoCloseOutline style={{ fontSize: '1.5rem' }} />
-                                </a>
+                                </button>
                             </div>
 
                             <Form onSubmit={this.submitHandler}>
@@ -86,3 +86,9 @@ export default class LoginPopUp extends React.Component {
 
 }
 
+const noStyleButton = {
+    backgroundColor: 'transparent',
+    color: 'inherit',
+    border: 'none',
+    outline: 'inherit'
+}
