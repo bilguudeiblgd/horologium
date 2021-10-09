@@ -51,7 +51,7 @@ router.route('/:id/:subject').post((req, res) => {
     User.findById(req.params.id)
         .then((user) => {
             const subjects = user.subjects;
-            const userSubject = subjects.filter(subj => subj.subjectname === subject)[0]
+            const userSubject = subjects.filter(subj => subj.subjectname === subject)[0];
             let studytime = userSubject.studied + studyAdd;
             userSubject.studied = studytime;
             user.save();

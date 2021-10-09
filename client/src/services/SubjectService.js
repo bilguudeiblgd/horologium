@@ -2,11 +2,12 @@
 const ApiURL = "https://horologium.herokuapp.com";
 
 const addSubjects = (userid, subjectname) => {
+    let subject_name = subjectname.split(" ").join("-");
     return new Promise((resolve, reject) => {
         fetch(`${ApiURL}/users/subjects/${userid}/add`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({subjectname: subjectname})
+            body: JSON.stringify({subjectname: subject_name})
         })
             .then(response => response.json())
             .then(data => {
