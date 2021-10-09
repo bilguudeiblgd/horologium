@@ -185,7 +185,7 @@ export default class Timer extends Component {
           <div className="center">
             <DropdownButton onClick={this.fetchData} variant="transparent" className="mb-4 subject-button" id="dropdown-variants-secondary" title={this.state.subjectchosen}>
               {this.state.subjectname.map((item, index) => {
-                return (<Dropdown.Item key={index} style={dropdownItem} onClick={this.changeDropdown} href={`#/action-${index}`}>{item.subjectname}</Dropdown.Item>);
+                return (<Dropdown.Item disabled={this.state.timer_started ? true : false} key={index} style={dropdownItem} onClick={this.changeDropdown} href={`#/action-${index}`}>{item.subjectname}</Dropdown.Item>);
               })}
 
             </DropdownButton>
