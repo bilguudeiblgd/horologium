@@ -134,9 +134,10 @@ export default class Timer extends Component {
   sendTime() {
     const chosenSubject = this.state.subjectchosen.split(" ").join("-");
     const userid = this.state.userid;
+    
     const totalStudyTime = { studyadd: this.state.currentTimeHour * 3600 + this.state.currentTimeMin * 60 + this.state.currentTimeSec };
     console.log(totalStudyTime);
-    fetch(`https://horologium.herokuapp.com/users/subjects/${userid}/${chosenSubject}`, {
+    fetch(`https://horologium.herokuapp.com/users/subjects/${this.props.userid}/${chosenSubject}`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       // We convert the React state to JSON and send it as the POST body
